@@ -88,7 +88,7 @@
   .tools{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
   .pill{font:600 .95rem var(--display);border:1.5px solid var(--ink);background:transparent;color:var(--ink);padding:.45rem 1rem;border-radius:999px;cursor:pointer}
   .pill.solid,.pill[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-  .pill[hidden],.filters[hidden]{display:none}
+  .pill[hidden],.filters[hidden],.tools[hidden]{display:none}
   .add-form{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.5rem;padding:1.5rem;border:1.5px solid var(--ink);border-radius:8px;margin-bottom:2rem}
   .add-form[hidden]{display:none}
   .add-form label{display:flex;flex-direction:column;gap:.3rem;font:600 .95rem var(--display)}
@@ -197,9 +197,10 @@ const ME = {
   <section id="ideas" aria-labelledby="ideas-h">
     <h2 id="ideas-h">Project ideas</h2>
     <p class="lede">Things I'm building, thinking about, or have set aside for now. Open one to see the problem and my plan.</p>
-    <div class="tools">
+    <div class="tools" id="tools" hidden>
       <button type="button" class="pill" id="editToggle" aria-pressed="false">Edit projects</button>
       <button type="button" class="pill solid" id="addBtn" hidden>+ Add project</button>
+      <button type="button" class="pill" id="exportBtn" hidden>Copy projects as code</button>
     </div>
     <form class="add-form" id="addForm" hidden>
       <label>Project name<input name="title" required maxlength="80"></label>
@@ -252,12 +253,16 @@ $("copyBtn").addEventListener("click", async e => {
   setTimeout(() => e.target.textContent = "Copy email", 2200);
 });
 
-// Ideas — saved in this browser so added/removed projects stick after a reload
+// Ideas — visitors always see ME.ideas from this file.
+// Editing tools only appear when the page is opened with #edit at the end of the URL;
+// changes made there are saved in your browser until you paste them into ME.ideas.
 const STATUSES = ["Brewing", "Prototyping", "Shelved"];
 const KEY = "portfolio-ideas";
+const EDITOR = location.hash === "#edit";
 let ideas = null;
-try { ideas = JSON.parse(localStorage.getItem(KEY)); } catch {}
+if (EDITOR) try { ideas = JSON.parse(localStorage.getItem(KEY)); } catch {}
 if (!Array.isArray(ideas)) ideas = ME.ideas.slice();
+$("tools").hidden = !EDITOR;
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(ideas)); } catch {} };
 
 let filter = "All";
@@ -275,7 +280,8 @@ function renderFilters(){
 }
 function renderIdeas(){
   const list = ideas.map((i, idx) => [i, idx]).filter(([i]) => filter === "All" || i.status === filter);
-  const empty = ideas.length ? "No projects with this status yet." : "No projects yet. Click “Edit projects” to add one.";
+  const empty = ideas.length ? "No projects with this status yet."
+    : EDITOR ? "No projects yet. Click “Edit projects” to add one." : "No projects yet. Check back soon.";
   $("ideaList").innerHTML = list.length ? list.map(([i, idx]) => {
     const stack = i.stack || [];
     return `
@@ -319,8 +325,14 @@ $("editToggle").addEventListener("click", e => {
   document.body.classList.toggle("editing", on);
   e.target.setAttribute("aria-pressed", on);
   e.target.textContent = on ? "Done editing" : "Edit projects";
-  $("addBtn").hidden = !on;
+  $("addBtn").hidden = $("exportBtn").hidden = !on;
   if (!on) { form.hidden = true; form.reset(); }
+});
+$("exportBtn").addEventListener("click", async e => {
+  const code = "ideas: " + JSON.stringify(ideas, null, 2);
+  try { await navigator.clipboard.writeText(code); e.target.textContent = "Copied! Paste over ideas: [] in the file"; }
+  catch { prompt("Copy this and paste it over ideas: [] in the file:", code); }
+  setTimeout(() => e.target.textContent = "Copy projects as code", 3000);
 });
 $("addBtn").addEventListener("click", () => { form.hidden = false; form.elements.title.focus(); });
 $("cancelAdd").addEventListener("click", () => { form.hidden = true; form.reset(); });
