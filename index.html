@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akshat Holani</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;600;700&family=Literata:opsz,wght@7..72,400;7..72,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E6EAE3;   /* pale sage paper */
+    --ink:#1C2541;     /* deep navy ink */
+    --muted:#55607A;
+    --line:#C3CBC0;
+    --marigold:#E8A33D;
+    --sky:#7BA7BC;
+    --clay:#B5654A;
+    --display:"Familjen Grotesk", system-ui, sans-serif;
+    --body:"Literata", Georgia, serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.7 var(--body);-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--marigold);outline-offset:3px;border-radius:4px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 clamp(1.25rem,4vw,2.5rem)}
+
+  /* nav */
+  nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;font-family:var(--display);font-size:.95rem}
+  nav .mark{font-weight:700;text-decoration:none}
+  nav ul{display:flex;gap:1.5rem;list-style:none;margin:0;padding:0}
+  nav ul a{text-decoration:none;color:var(--muted)}
+  nav ul a:hover{color:var(--ink)}
+
+  /* hero */
+  .hero{padding:clamp(3rem,10vw,7rem) 0 clamp(3rem,7vw,5rem);display:grid;grid-template-columns:1.4fr 1fr;gap:3rem;align-items:end}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(3rem,9vw,7.25rem);line-height:.92;letter-spacing:-.035em;margin:0}
+  .hero h1 .wave{display:inline-block;transform-origin:70% 80%;animation:wave 1.6s ease-in-out .4s 1}
+  @keyframes wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(14deg)}40%,80%{transform:rotate(-8deg)}}
+  .hero .intro{max-width:34ch;margin:0;color:var(--ink)}
+  .hero .intro + .intro{margin-top:1rem;color:var(--muted)}
+  .now{margin-top:2rem;display:flex;gap:.6rem;align-items:baseline;font-family:var(--display);font-size:.95rem;color:var(--muted)}
+  .now::before{content:"";width:.6rem;height:.6rem;border-radius:50%;background:var(--marigold);flex:none;transform:translateY(-1px)}
+
+  /* about */
+  section{padding:clamp(3rem,7vw,5rem) 0;border-top:1.5px solid var(--ink)}
+  h2{font-family:var(--display);font-weight:700;font-size:clamp(1.9rem,4vw,2.75rem);letter-spacing:-.02em;line-height:1.05;margin:0 0 .5rem}
+  .lede{color:var(--muted);max-width:52ch;margin:0 0 2.5rem}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+  .about-grid p{max-width:60ch;margin:0 0 1rem}
+  dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.9rem 1.5rem;font-size:1rem}
+  dt{font-family:var(--display);font-weight:600}
+  dd{margin:0;color:var(--muted)}
+  .grades-h{font:700 1.35rem var(--display);margin:3rem 0 1rem}
+  .grades{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+  .grades li{padding:1.25rem 1.5rem 0 0;border-right:1px solid var(--line);margin-right:1.5rem}
+  .grades li:last-child{border-right:0;margin-right:0}
+  .grades b{display:block;font:700 clamp(2.2rem,5vw,3.5rem)/1 var(--display);letter-spacing:-.03em}
+  .grades span{color:var(--muted);font-size:1rem}
+  @media (max-width:560px){.grades{grid-template-columns:1fr}.grades li{border-right:0;margin-right:0;border-bottom:1px solid var(--line);padding:1rem 0}}
+
+  /* ideas */
+  .filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+  .filters button{font:600 .95rem var(--display);border:1.5px solid var(--ink);background:transparent;color:var(--ink);padding:.45rem 1rem;border-radius:999px;cursor:pointer}
+  .filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+  .ideas{list-style:none;margin:0;padding:0}
+  .idea{border-bottom:1px solid var(--line)}
+  .idea > button{all:unset;box-sizing:border-box;width:100%;cursor:pointer;display:grid;grid-template-columns:1fr auto 1.5rem;gap:1.5rem;align-items:center;padding:1.4rem .25rem}
+  .idea > button:focus-visible{outline:3px solid var(--marigold);outline-offset:-3px}
+  .idea h3{font-family:var(--display);font-weight:600;font-size:clamp(1.25rem,2.4vw,1.6rem);letter-spacing:-.01em;margin:0;line-height:1.2}
+  .idea .pitch{color:var(--muted);margin:.2rem 0 0;font-size:1rem}
+  .status{font:600 .85rem var(--display);padding:.25rem .7rem;border-radius:999px;white-space:nowrap;color:var(--ink)}
+  .status[data-s="Brewing"]{background:var(--marigold)}
+  .status[data-s="Prototyping"]{background:var(--sky)}
+  .status[data-s="Shelved"]{background:transparent;border:1.5px dashed var(--muted);color:var(--muted)}
+  .chev{width:1.5rem;height:1.5rem;transition:transform .25s ease}
+  .idea[data-open="true"] .chev{transform:rotate(45deg)}
+  .detail{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+  .idea[data-open="true"] .detail{grid-template-rows:1fr}
+  .detail > div{overflow:hidden}
+  .detail .inner{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;padding:0 .25rem 1.8rem}
+  .detail h4{font:600 .95rem var(--display);margin:0 0 .3rem}
+  .detail p{margin:0;font-size:.98rem;max-width:40ch}
+  .tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.3rem}
+  .tags span{font:400 .85rem var(--display);border:1px solid var(--line);padding:.1rem .55rem;border-radius:4px;background:#EEF1EC}
+  .empty{color:var(--muted);padding:2rem 0}
+  .tools{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+  .pill{font:600 .95rem var(--display);border:1.5px solid var(--ink);background:transparent;color:var(--ink);padding:.45rem 1rem;border-radius:999px;cursor:pointer}
+  .pill.solid,.pill[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+  .pill[hidden],.filters[hidden]{display:none}
+  .add-form{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.5rem;padding:1.5rem;border:1.5px solid var(--ink);border-radius:8px;margin-bottom:2rem}
+  .add-form[hidden]{display:none}
+  .add-form label{display:flex;flex-direction:column;gap:.3rem;font:600 .95rem var(--display)}
+  .add-form label small{font-weight:400;color:var(--muted)}
+  .add-form .full{grid-column:1/-1}
+  .add-form input,.add-form select,.add-form textarea{font:400 1rem var(--body);color:var(--ink);background:#EEF1EC;border:1px solid var(--line);border-radius:4px;padding:.5rem .65rem}
+  .add-form textarea{resize:vertical;min-height:4.5rem}
+  .add-form .actions{grid-column:1/-1;display:flex;gap:.5rem}
+  .row-actions{padding:0 .25rem 1.2rem}
+  body:not(.editing) .row-actions{display:none}
+  .remove{font:600 .9rem var(--display);border:1.5px solid var(--clay);color:var(--clay);background:transparent;padding:.35rem .9rem;border-radius:999px;cursor:pointer}
+  .remove:hover{background:var(--clay);color:var(--paper)}
+
+  /* contact */
+  .contact h2{font-size:clamp(2.2rem,6vw,4.5rem);max-width:14ch}
+  .links{display:flex;flex-wrap:wrap;gap:1rem 2rem;margin-top:2rem;font-family:var(--display);font-size:1.15rem}
+  .links a{text-decoration-thickness:2px;text-underline-offset:5px;text-decoration-color:var(--marigold)}
+  .links a:hover{text-decoration-color:var(--ink)}
+  .copy{font:600 1rem var(--display);border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);padding:.55rem 1.1rem;border-radius:999px;cursor:pointer}
+  footer{padding:2rem 0 3rem;color:var(--muted);font-size:.9rem;font-family:var(--display)}
+
+  @media (max-width:760px){
+    .hero,.about-grid{grid-template-columns:1fr}
+    .hero{gap:1.5rem}
+    nav ul{gap:1rem}
+    .idea > button{grid-template-columns:1fr 1.5rem;gap:.75rem}
+    .idea .status{grid-column:1;justify-self:start;grid-row:2}
+    .detail .inner{grid-template-columns:1fr;gap:1.2rem}
+    .add-form{grid-template-columns:1fr;padding:1.1rem}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+<script>
+/* ============================================================
+   EDIT YOUR CONTENT HERE — everything on the page comes from this object.
+   ============================================================ */
+const ME = {
+  name: "Akshat Holani",
+  firstName: "Akshat",
+  role: "B.Tech CSE student at USICT, GGSIPU",
+  intro: "I'm a computer science student who learns quickly and likes turning ideas into working projects.",
+  introMore: "Below are a few things about me and the project ideas I'm working on.",
+  now: "Currently pursuing B.Tech in Computer Science & Engineering",
+  about: [
+    "I'm a quick learner. When something new comes up, whether it's a language, a tool or a problem I haven't seen before, I pick it up fast and get to work.",
+    "I'm ready to take on responsibility and see it through. I'm also easy to work with: friendly with teammates, and I believe good projects come from people who enjoy working together."
+  ],
+  facts: [
+    ["Studying", "B.Tech, Computer Science & Engineering"],
+    ["College", "USICT, Guru Gobind Singh Indraprastha University"],
+    ["Strengths", "Quick learner, takes responsibility, team player"],
+    ["Hobby", "Cricket"]
+  ],
+  grades: [
+    ["94%", "Class 10"],
+    ["86.6%", "Class 12"],
+    ["96.413", "JEE Main percentile"]
+  ],
+  email: "akshatholani.4@gmail.com",
+  links: [
+    ["GitHub", "https://github.com/AkshatHolani"],
+    ["LinkedIn", "https://www.linkedin.com/in/akshat-holani-47ab81446"]
+  ],
+  // Starting projects. Use the "Edit projects" button on the page to add or remove them.
+  ideas: []
+};
+</script>
+
+<div class="wrap">
+  <nav aria-label="Main">
+    <a class="mark" href="#top" id="mark"></a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#ideas">Ideas</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero" id="top">
+    <h1>Hi, I'm <span id="first"></span><span class="wave" aria-hidden="true">👋</span></h1>
+    <div>
+      <p class="intro" id="intro"></p>
+      <p class="intro" id="introMore"></p>
+      <p class="now" id="now"></p>
+    </div>
+  </header>
+
+  <section id="about" aria-labelledby="about-h">
+    <div class="about-grid">
+      <div>
+        <h2 id="about-h">About me</h2>
+        <p class="lede" id="role" style="margin-bottom:1.5rem"></p>
+        <div id="aboutText"></div>
+      </div>
+      <dl id="facts"></dl>
+    </div>
+    <h3 class="grades-h">Academics</h3>
+    <ul class="grades" id="grades"></ul>
+  </section>
+
+  <section id="ideas" aria-labelledby="ideas-h">
+    <h2 id="ideas-h">Project ideas</h2>
+    <p class="lede">Things I'm building, thinking about, or have set aside for now. Open one to see the problem and my plan.</p>
+    <div class="tools">
+      <button type="button" class="pill" id="editToggle" aria-pressed="false">Edit projects</button>
+      <button type="button" class="pill solid" id="addBtn" hidden>+ Add project</button>
+    </div>
+    <form class="add-form" id="addForm" hidden>
+      <label>Project name<input name="title" required maxlength="80"></label>
+      <label>Status<select name="status" id="statusSelect"></select></label>
+      <label class="full">One-line pitch<input name="pitch" maxlength="160"></label>
+      <label>The problem<textarea name="problem"></textarea></label>
+      <label>My plan<textarea name="approach"></textarea></label>
+      <label class="full">Likely tools <small>(comma separated, e.g. React, Firebase)</small><input name="stack"></label>
+      <div class="actions">
+        <button type="submit" class="pill solid">Save project</button>
+        <button type="button" class="pill" id="cancelAdd">Cancel</button>
+      </div>
+    </form>
+    <div class="filters" role="group" aria-label="Filter by status" id="filters"></div>
+    <ul class="ideas" id="ideaList"></ul>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="contact-h">
+    <h2 id="contact-h">Want to build one of these together?</h2>
+    <p class="lede" style="margin-bottom:0">I'm happy to talk about collaborations, feedback, or internships.</p>
+    <div class="links" id="links"></div>
+  </section>
+
+  <footer id="foot"></footer>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+$("mark").textContent = ME.name;
+$("first").textContent = ME.firstName + " ";
+$("intro").textContent = ME.intro;
+$("introMore").textContent = ME.introMore;
+$("now").textContent = ME.now;
+$("role").textContent = ME.role;
+$("aboutText").innerHTML = ME.about.map(p => `<p>${esc(p)}</p>`).join("");
+$("facts").innerHTML = ME.facts.map(([k,v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("");
+$("grades").innerHTML = ME.grades.map(([v,l]) => `<li><b>${esc(v)}</b><span>${esc(l)}</span></li>`).join("");
+$("foot").textContent = `© ${new Date().getFullYear()} ${ME.name}`;
+
+// Contact
+$("links").innerHTML =
+  `<a href="mailto:${esc(ME.email)}">${esc(ME.email)}</a>` +
+  ME.links.map(([l,u]) => `<a href="${esc(u)}" rel="noopener">${esc(l)}</a>`).join("") +
+  `<button class="copy" id="copyBtn" type="button">Copy email</button>`;
+$("copyBtn").addEventListener("click", async e => {
+  try { await navigator.clipboard.writeText(ME.email); e.target.textContent = "Email copied"; }
+  catch { e.target.textContent = ME.email; }
+  setTimeout(() => e.target.textContent = "Copy email", 2200);
+});
+
+// Ideas — saved in this browser so added/removed projects stick after a reload
+const STATUSES = ["Brewing", "Prototyping", "Shelved"];
+const KEY = "portfolio-ideas";
+let ideas = null;
+try { ideas = JSON.parse(localStorage.getItem(KEY)); } catch {}
+if (!Array.isArray(ideas)) ideas = ME.ideas.slice();
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(ideas)); } catch {} };
+
+let filter = "All";
+const chev = `<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>`;
+$("statusSelect").innerHTML = STATUSES.map(s => `<option>${esc(s)}</option>`).join("");
+
+function renderFilters(){
+  const statuses = ["All", ...new Set(ideas.map(i => i.status))];
+  if (!statuses.includes(filter)) filter = "All";
+  $("filters").hidden = !ideas.length;
+  $("filters").innerHTML = statuses.map(s => {
+    const n = s === "All" ? ideas.length : ideas.filter(i => i.status === s).length;
+    return `<button type="button" aria-pressed="${s===filter}" data-f="${esc(s)}">${esc(s)} (${n})</button>`;
+  }).join("");
+}
+function renderIdeas(){
+  const list = ideas.map((i, idx) => [i, idx]).filter(([i]) => filter === "All" || i.status === filter);
+  const empty = ideas.length ? "No projects with this status yet." : "No projects yet. Click “Edit projects” to add one.";
+  $("ideaList").innerHTML = list.length ? list.map(([i, idx]) => {
+    const stack = i.stack || [];
+    return `
+    <li class="idea" data-open="false">
+      <button type="button" aria-expanded="false" aria-controls="d${idx}">
+        <span><h3>${esc(i.title)}</h3>${i.pitch ? `<p class="pitch">${esc(i.pitch)}</p>` : ""}</span>
+        <span class="status" data-s="${esc(i.status)}">${esc(i.status)}</span>
+        ${chev}
+      </button>
+      <div class="row-actions"><button type="button" class="remove" data-i="${idx}">Remove</button></div>
+      <div class="detail" id="d${idx}"><div><div class="inner">
+        ${i.problem ? `<div><h4>The problem</h4><p>${esc(i.problem)}</p></div>` : ""}
+        ${i.approach ? `<div><h4>My plan</h4><p>${esc(i.approach)}</p></div>` : ""}
+        ${stack.length ? `<div><h4>Likely tools</h4><div class="tags">${stack.map(t => `<span>${esc(t)}</span>`).join("")}</div></div>` : ""}
+      </div></div></div>
+    </li>`;
+  }).join("") : `<li class="empty">${empty}</li>`;
+}
+const render = () => { renderFilters(); renderIdeas(); };
+
+$("filters").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  filter = b.dataset.f; render();
+});
+$("ideaList").addEventListener("click", e => {
+  const rm = e.target.closest(".remove");
+  if (rm) {
+    const i = +rm.dataset.i;
+    if (confirm(`Remove "${ideas[i].title}"?`)) { ideas.splice(i, 1); save(); render(); }
+    return;
+  }
+  const b = e.target.closest(".idea > button"); if (!b) return;
+  const li = b.parentElement, open = li.dataset.open !== "true";
+  li.dataset.open = open; b.setAttribute("aria-expanded", open);
+});
+
+// Edit mode: shows the Add button and a Remove button on each project
+const form = $("addForm");
+$("editToggle").addEventListener("click", e => {
+  const on = !document.body.classList.contains("editing");
+  document.body.classList.toggle("editing", on);
+  e.target.setAttribute("aria-pressed", on);
+  e.target.textContent = on ? "Done editing" : "Edit projects";
+  $("addBtn").hidden = !on;
+  if (!on) { form.hidden = true; form.reset(); }
+});
+$("addBtn").addEventListener("click", () => { form.hidden = false; form.elements.title.focus(); });
+$("cancelAdd").addEventListener("click", () => { form.hidden = true; form.reset(); });
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  const f = form.elements;
+  const title = f.title.value.trim(); if (!title) return;
+  ideas.push({
+    title,
+    pitch: f.pitch.value.trim(),
+    status: f.status.value,
+    problem: f.problem.value.trim(),
+    approach: f.approach.value.trim(),
+    stack: f.stack.value.split(",").map(s => s.trim()).filter(Boolean)
+  });
+  save(); form.reset(); form.hidden = true; filter = "All"; render();
+});
+render();
+</script>
+</body>
+</html>
