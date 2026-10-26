@@ -25,6 +25,7 @@
   a{color:inherit}
   :focus-visible{outline:3px solid var(--marigold);outline-offset:3px;border-radius:4px}
   .wrap{max-width:1080px;margin:0 auto;padding:0 clamp(1.25rem,4vw,2.5rem)}
+  [hidden]{display:none!important}
 
   /* nav */
   nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;font-family:var(--display);font-size:.95rem}
@@ -85,22 +86,6 @@
   .tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.3rem}
   .tags span{font:400 .85rem var(--display);border:1px solid var(--line);padding:.1rem .55rem;border-radius:4px;background:#EEF1EC}
   .empty{color:var(--muted);padding:2rem 0}
-  .tools{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
-  .pill{font:600 .95rem var(--display);border:1.5px solid var(--ink);background:transparent;color:var(--ink);padding:.45rem 1rem;border-radius:999px;cursor:pointer}
-  .pill.solid,.pill[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-  .pill[hidden],.filters[hidden],.tools[hidden]{display:none}
-  .add-form{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.5rem;padding:1.5rem;border:1.5px solid var(--ink);border-radius:8px;margin-bottom:2rem}
-  .add-form[hidden]{display:none}
-  .add-form label{display:flex;flex-direction:column;gap:.3rem;font:600 .95rem var(--display)}
-  .add-form label small{font-weight:400;color:var(--muted)}
-  .add-form .full{grid-column:1/-1}
-  .add-form input,.add-form select,.add-form textarea{font:400 1rem var(--body);color:var(--ink);background:#EEF1EC;border:1px solid var(--line);border-radius:4px;padding:.5rem .65rem}
-  .add-form textarea{resize:vertical;min-height:4.5rem}
-  .add-form .actions{grid-column:1/-1;display:flex;gap:.5rem}
-  .row-actions{padding:0 .25rem 1.2rem}
-  body:not(.editing) .row-actions{display:none}
-  .remove{font:600 .9rem var(--display);border:1.5px solid var(--clay);color:var(--clay);background:transparent;padding:.35rem .9rem;border-radius:999px;cursor:pointer}
-  .remove:hover{background:var(--clay);color:var(--paper)}
 
   /* contact */
   .contact h2{font-size:clamp(2.2rem,6vw,4.5rem);max-width:14ch}
@@ -110,6 +95,30 @@
   .copy{font:600 1rem var(--display);border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);padding:.55rem 1.1rem;border-radius:999px;cursor:pointer}
   footer{padding:2rem 0 3rem;color:var(--muted);font-size:.9rem;font-family:var(--display)}
 
+  /* editor (only shown with #edit in the URL) */
+  .pill{font:600 .95rem var(--display);border:1.5px solid var(--ink);background:transparent;color:var(--ink);padding:.45rem 1rem;border-radius:999px;cursor:pointer}
+  .pill.solid{background:var(--ink);color:var(--paper)}
+  .ed-fab{position:fixed;right:1rem;bottom:1rem;z-index:50;box-shadow:0 6px 20px rgba(28,37,65,.25)}
+  .ed{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);z-index:60;overflow-y:auto;background:var(--paper);border-left:1.5px solid var(--ink);padding:0 1.25rem 2rem;font-family:var(--display);box-shadow:-8px 0 30px rgba(28,37,65,.15)}
+  .ed-head{position:sticky;top:0;z-index:1;background:var(--paper);padding:1rem 0 .75rem;border-bottom:1px solid var(--line)}
+  .ed-head .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
+  .ed-head b{font-size:1.15rem}
+  .ed-actions{display:flex;flex-wrap:wrap;gap:.4rem}
+  .ed-actions .pill{font-size:.85rem;padding:.35rem .8rem}
+  .ed .note{font-size:.82rem;color:var(--muted);line-height:1.45;margin:.6rem 0 0}
+  .ed h3{font:700 1rem var(--display);margin:1.4rem 0 .4rem}
+  .ed label{display:block;font:600 .82rem var(--display);margin:.6rem 0 .2rem;color:var(--muted)}
+  .ed input,.ed textarea,.ed select{width:100%;font:400 .95rem var(--body);color:var(--ink);background:#F4F6F2;border:1px solid var(--line);border-radius:4px;padding:.4rem .55rem}
+  .ed textarea{resize:vertical;min-height:4rem}
+  .ed .row{display:grid;grid-template-columns:1fr 1fr auto;gap:.4rem;margin-bottom:.4rem;align-items:start}
+  .ed .row.one{grid-template-columns:1fr auto}
+  .ed .card{border:1px solid var(--line);border-radius:6px;padding:.25rem .75rem .75rem;margin-bottom:.75rem}
+  .ed .card-top{display:flex;justify-content:flex-end;margin-top:.5rem}
+  .ed .x{font:600 .8rem var(--display);border:1.5px solid var(--clay);color:var(--clay);background:transparent;padding:.3rem .65rem;border-radius:999px;cursor:pointer}
+  .ed .x:hover{background:var(--clay);color:var(--paper)}
+  .ed .add{font:600 .85rem var(--display);border:1.5px dashed var(--ink);background:transparent;color:var(--ink);padding:.35rem .8rem;border-radius:999px;cursor:pointer;margin-top:.2rem}
+  @media (min-width:900px){body.ed-open{padding-right:420px}}
+
   @media (max-width:760px){
     .hero,.about-grid{grid-template-columns:1fr}
     .hero{gap:1.5rem}
@@ -117,7 +126,6 @@
     .idea > button{grid-template-columns:1fr 1.5rem;gap:.75rem}
     .idea .status{grid-column:1;justify-self:start;grid-row:2}
     .detail .inner{grid-template-columns:1fr;gap:1.2rem}
-    .add-form{grid-template-columns:1fr;padding:1.1rem}
   }
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important}
@@ -126,58 +134,48 @@
 </style>
 </head>
 <body>
-<script>
-/* ============================================================
-   EDIT YOUR CONTENT HERE — everything on the page comes from this object.
-   ============================================================ */
-const ME = {
-  name: "Akshat Holani",
-  firstName: "Akshat",
-  role: "B.Tech CSE student at USICT, GGSIPU",
-  intro: "I'm a computer science student who learns quickly and likes turning ideas into working projects.",
-  introMore: "Below are a few things about me and the project ideas I'm working on.",
-  now: "Currently pursuing B.Tech in Computer Science & Engineering",
-  about: [
+<!-- ============================================================
+     YOUR CONTENT — everything on the page comes from this data.
+     Easiest way to change it: open the site with #edit at the end of the
+     address (e.g. https://akshatholani.github.io/#edit), edit in the panel,
+     then click "Download index.html" and upload that file to GitHub.
+     ============================================================ -->
+<script type="application/json" id="me-data">
+{
+  "name": "Akshat Holani",
+  "firstName": "Akshat",
+  "intro": "I'm a computer science student who learns quickly and likes turning ideas into working projects.",
+  "introMore": "Below are a few things about me and the project ideas I'm working on.",
+  "now": "Currently pursuing B.Tech in Computer Science & Engineering",
+  "aboutTitle": "About me",
+  "role": "B.Tech CSE student at USICT, GGSIPU",
+  "about": [
     "I'm a quick learner. When something new comes up, whether it's a language, a tool or a problem I haven't seen before, I pick it up fast and get to work.",
     "I'm ready to take on responsibility and see it through. I'm also easy to work with: friendly with teammates, and I believe good projects come from people who enjoy working together."
   ],
-  facts: [
+  "facts": [
     ["Studying", "B.Tech, Computer Science & Engineering"],
     ["College", "USICT, Guru Gobind Singh Indraprastha University"],
     ["Strengths", "Quick learner, takes responsibility, team player"],
     ["Hobby", "Cricket"]
   ],
-  grades: [
+  "gradesTitle": "Academics",
+  "grades": [
     ["94%", "Class 10"],
     ["86.6%", "Class 12"],
     ["96.413", "JEE Main percentile"]
   ],
-  email: "akshatholani.4@gmail.com",
-  links: [
+  "ideasTitle": "Project ideas",
+  "ideasLede": "Things I'm building, thinking about, or have set aside for now. Open one to see the problem and my plan.",
+  "ideas": [],
+  "contactTitle": "Want to build one of these together?",
+  "contactLede": "I'm happy to talk about collaborations, feedback, or internships.",
+  "email": "akshatholani.4@gmail.com",
+  "links": [
     ["GitHub", "https://github.com/AkshatHolani"],
     ["LinkedIn", "https://www.linkedin.com/in/akshat-holani-47ab81446"]
-  ],
-  // Starting projects. Use the "Edit projects" button on the page to add or remove them.
-  ideas: [
-  {
-    "title": "CampusPulse",
-    "pitch": "CampusPulse is a responsive React app where students can discover, search and bookmark college events in one place, instead of hunting through WhatsApp groups a",
-    "status": "Prototyping",
-    "problem": "Campus event info is scattered across WhatsApp groups, Instagram and notice boards, so students miss events they’d enjoy.",
-    "approach": "A single responsive website to search, filter, bookmark and share all campus events, built with React and Tailwind. The next step is connecting it to live data from the clubs.",
-    "stack": [
-      "React",
-      "Vite",
-      "Tailwind CSS",
-      "JavaScript",
-      "HTML/CSS",
-      "Git & GitHub",
-      "Vercel",
-      "VS Code"
-    ]
-  }
-]
-};
+  ]
+}
 </script>
 
 <div class="wrap">
@@ -202,104 +200,96 @@ const ME = {
   <section id="about" aria-labelledby="about-h">
     <div class="about-grid">
       <div>
-        <h2 id="about-h">About me</h2>
+        <h2 id="about-h"></h2>
         <p class="lede" id="role" style="margin-bottom:1.5rem"></p>
         <div id="aboutText"></div>
       </div>
       <dl id="facts"></dl>
     </div>
-    <h3 class="grades-h">Academics</h3>
+    <h3 class="grades-h" id="gradesTitle"></h3>
     <ul class="grades" id="grades"></ul>
   </section>
 
   <section id="ideas" aria-labelledby="ideas-h">
-    <h2 id="ideas-h">Project ideas</h2>
-    <p class="lede">Things I'm building, thinking about, or have set aside for now. Open one to see the problem and my plan.</p>
-    <div class="tools" id="tools" hidden>
-      <button type="button" class="pill" id="editToggle" aria-pressed="false">Edit projects</button>
-      <button type="button" class="pill solid" id="addBtn" hidden>+ Add project</button>
-      <button type="button" class="pill" id="exportBtn" hidden>Copy projects as code</button>
-    </div>
-    <form class="add-form" id="addForm" hidden>
-      <label>Project name<input name="title" required maxlength="80"></label>
-      <label>Status<select name="status" id="statusSelect"></select></label>
-      <label class="full">One-line pitch<input name="pitch" maxlength="160"></label>
-      <label>The problem<textarea name="problem"></textarea></label>
-      <label>My plan<textarea name="approach"></textarea></label>
-      <label class="full">Likely tools <small>(comma separated, e.g. React, Firebase)</small><input name="stack"></label>
-      <div class="actions">
-        <button type="submit" class="pill solid">Save project</button>
-        <button type="button" class="pill" id="cancelAdd">Cancel</button>
-      </div>
-    </form>
+    <h2 id="ideas-h"></h2>
+    <p class="lede" id="ideasLede"></p>
     <div class="filters" role="group" aria-label="Filter by status" id="filters"></div>
     <ul class="ideas" id="ideaList"></ul>
   </section>
 
   <section class="contact" id="contact" aria-labelledby="contact-h">
-    <h2 id="contact-h">Want to build one of these together?</h2>
-    <p class="lede" style="margin-bottom:0">I'm happy to talk about collaborations, feedback, or internships.</p>
+    <h2 id="contact-h"></h2>
+    <p class="lede" id="contactLede" style="margin-bottom:0"></p>
     <div class="links" id="links"></div>
   </section>
 
   <footer id="foot"></footer>
 </div>
 
+<button type="button" class="pill solid ed-fab" id="edOpen" hidden>✎ Edit page</button>
+<aside class="ed" id="ed" aria-label="Page editor" hidden>
+  <div class="ed-head">
+    <div class="top"><b>Edit page</b><button type="button" class="pill" id="edClose">Close</button></div>
+    <div class="ed-actions">
+      <button type="button" class="pill solid" id="edDownload">Download index.html</button>
+      <button type="button" class="pill" id="edCopy">Copy data</button>
+      <button type="button" class="pill" id="edDiscard">Discard changes</button>
+    </div>
+    <p class="note" id="edNote">Changes show on the page right away and are saved in this browser only. Visitors see them after you download index.html and upload it to GitHub.</p>
+  </div>
+  <div id="edBody"></div>
+</aside>
+
 <script>
 const $ = id => document.getElementById(id);
-const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
-$("mark").textContent = ME.name;
-$("first").textContent = ME.firstName + " ";
-$("intro").textContent = ME.intro;
-$("introMore").textContent = ME.introMore;
-$("now").textContent = ME.now;
-$("role").textContent = ME.role;
-$("aboutText").innerHTML = ME.about.map(p => `<p>${esc(p)}</p>`).join("");
-$("facts").innerHTML = ME.facts.map(([k,v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("");
-$("grades").innerHTML = ME.grades.map(([v,l]) => `<li><b>${esc(v)}</b><span>${esc(l)}</span></li>`).join("");
-$("foot").textContent = `© ${new Date().getFullYear()} ${ME.name}`;
-
-// Contact
-$("links").innerHTML =
-  `<a href="mailto:${esc(ME.email)}">${esc(ME.email)}</a>` +
-  ME.links.map(([l,u]) => `<a href="${esc(u)}" rel="noopener">${esc(l)}</a>`).join("") +
-  `<button class="copy" id="copyBtn" type="button">Copy email</button>`;
-$("copyBtn").addEventListener("click", async e => {
-  try { await navigator.clipboard.writeText(ME.email); e.target.textContent = "Email copied"; }
-  catch { e.target.textContent = ME.email; }
-  setTimeout(() => e.target.textContent = "Copy email", 2200);
-});
-
-// Ideas — visitors always see ME.ideas from this file.
-// Editing tools only appear when the page is opened with #edit at the end of the URL;
-// changes made there are saved in your browser until you paste them into ME.ideas.
-const STATUSES = ["Brewing", "Prototyping", "Shelved"];
-const KEY = "portfolio-ideas";
+const ORIGINAL = JSON.parse($("me-data").textContent);
 const EDITOR = location.hash === "#edit";
-let ideas = null;
-if (EDITOR) try { ideas = JSON.parse(localStorage.getItem(KEY)); } catch {}
-if (!Array.isArray(ideas)) ideas = ME.ideas.slice();
-$("tools").hidden = !EDITOR;
-const save = () => { try { localStorage.setItem(KEY, JSON.stringify(ideas)); } catch {} };
+const DRAFT_KEY = "portfolio-draft";
+let ME = ORIGINAL;
+if (EDITOR) {
+  try { const d = JSON.parse(localStorage.getItem(DRAFT_KEY)); if (d && typeof d === "object") ME = d; } catch {}
+}
+// Adding #edit to an already-open page reloads it so the editor appears
+addEventListener("hashchange", () => { if ((location.hash === "#edit") !== EDITOR) location.reload(); });
 
+/* ---------- page ---------- */
+const STATUSES = ["Brewing", "Prototyping", "Shelved"];
 let filter = "All";
 const chev = `<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>`;
-$("statusSelect").innerHTML = STATUSES.map(s => `<option>${esc(s)}</option>`).join("");
 
+function renderPage(){
+  document.title = ME.name;
+  $("mark").textContent = ME.name;
+  $("first").textContent = ME.firstName + " ";
+  for (const k of ["intro","introMore","now","role","ideasLede","contactLede"]) $(k).textContent = ME[k] || "";
+  $("about-h").textContent = ME.aboutTitle;
+  $("gradesTitle").textContent = ME.gradesTitle;
+  $("ideas-h").textContent = ME.ideasTitle;
+  $("contact-h").textContent = ME.contactTitle;
+  $("aboutText").innerHTML = ME.about.map(p => `<p>${esc(p)}</p>`).join("");
+  $("facts").innerHTML = ME.facts.map(([k,v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("");
+  $("grades").innerHTML = ME.grades.map(([v,l]) => `<li><b>${esc(v)}</b><span>${esc(l)}</span></li>`).join("");
+  $("links").innerHTML =
+    (ME.email ? `<a href="mailto:${esc(ME.email)}">${esc(ME.email)}</a>` : "") +
+    ME.links.map(([l,u]) => `<a href="${esc(u)}" rel="noopener">${esc(l)}</a>`).join("") +
+    (ME.email ? `<button class="copy" id="copyBtn" type="button">Copy email</button>` : "");
+  $("foot").textContent = `© ${new Date().getFullYear()} ${ME.name}`;
+  renderFilters(); renderIdeas();
+}
 function renderFilters(){
-  const statuses = ["All", ...new Set(ideas.map(i => i.status))];
+  const statuses = ["All", ...new Set(ME.ideas.map(i => i.status))];
   if (!statuses.includes(filter)) filter = "All";
-  $("filters").hidden = !ideas.length;
+  $("filters").hidden = !ME.ideas.length;
   $("filters").innerHTML = statuses.map(s => {
-    const n = s === "All" ? ideas.length : ideas.filter(i => i.status === s).length;
+    const n = s === "All" ? ME.ideas.length : ME.ideas.filter(i => i.status === s).length;
     return `<button type="button" aria-pressed="${s===filter}" data-f="${esc(s)}">${esc(s)} (${n})</button>`;
   }).join("");
 }
 function renderIdeas(){
-  const list = ideas.map((i, idx) => [i, idx]).filter(([i]) => filter === "All" || i.status === filter);
-  const empty = ideas.length ? "No projects with this status yet."
-    : EDITOR ? "No projects yet. Click “Edit projects” to add one." : "No projects yet. Check back soon.";
+  const list = ME.ideas.map((i, idx) => [i, idx]).filter(([i]) => filter === "All" || i.status === filter);
+  const empty = ME.ideas.length ? "No projects with this status yet." : "No projects yet. Check back soon.";
   $("ideaList").innerHTML = list.length ? list.map(([i, idx]) => {
     const stack = i.stack || [];
     return `
@@ -309,7 +299,6 @@ function renderIdeas(){
         <span class="status" data-s="${esc(i.status)}">${esc(i.status)}</span>
         ${chev}
       </button>
-      <div class="row-actions"><button type="button" class="remove" data-i="${idx}">Remove</button></div>
       <div class="detail" id="d${idx}"><div><div class="inner">
         ${i.problem ? `<div><h4>The problem</h4><p>${esc(i.problem)}</p></div>` : ""}
         ${i.approach ? `<div><h4>My plan</h4><p>${esc(i.approach)}</p></div>` : ""}
@@ -318,57 +307,141 @@ function renderIdeas(){
     </li>`;
   }).join("") : `<li class="empty">${empty}</li>`;
 }
-const render = () => { renderFilters(); renderIdeas(); };
 
+$("links").addEventListener("click", async e => {
+  const b = e.target.closest("#copyBtn"); if (!b) return;
+  try { await navigator.clipboard.writeText(ME.email); b.textContent = "Email copied"; }
+  catch { b.textContent = ME.email; }
+  setTimeout(() => b.textContent = "Copy email", 2200);
+});
 $("filters").addEventListener("click", e => {
   const b = e.target.closest("button"); if (!b) return;
-  filter = b.dataset.f; render();
+  filter = b.dataset.f; renderFilters(); renderIdeas();
 });
 $("ideaList").addEventListener("click", e => {
-  const rm = e.target.closest(".remove");
-  if (rm) {
-    const i = +rm.dataset.i;
-    if (confirm(`Remove "${ideas[i].title}"?`)) { ideas.splice(i, 1); save(); render(); }
-    return;
-  }
   const b = e.target.closest(".idea > button"); if (!b) return;
   const li = b.parentElement, open = li.dataset.open !== "true";
   li.dataset.open = open; b.setAttribute("aria-expanded", open);
 });
+renderPage();
 
-// Edit mode: shows the Add button and a Remove button on each project
-const form = $("addForm");
-$("editToggle").addEventListener("click", e => {
-  const on = !document.body.classList.contains("editing");
-  document.body.classList.toggle("editing", on);
-  e.target.setAttribute("aria-pressed", on);
-  e.target.textContent = on ? "Done editing" : "Edit projects";
-  $("addBtn").hidden = $("exportBtn").hidden = !on;
-  if (!on) { form.hidden = true; form.reset(); }
-});
-$("exportBtn").addEventListener("click", async e => {
-  const code = "ideas: " + JSON.stringify(ideas, null, 2);
-  try { await navigator.clipboard.writeText(code); e.target.textContent = "Copied! Paste over ideas: [] in the file"; }
-  catch { prompt("Copy this and paste it over ideas: [] in the file:", code); }
-  setTimeout(() => e.target.textContent = "Copy projects as code", 3000);
-});
-$("addBtn").addEventListener("click", () => { form.hidden = false; form.elements.title.focus(); });
-$("cancelAdd").addEventListener("click", () => { form.hidden = true; form.reset(); });
-form.addEventListener("submit", e => {
-  e.preventDefault();
-  const f = form.elements;
-  const title = f.title.value.trim(); if (!title) return;
-  ideas.push({
-    title,
-    pitch: f.pitch.value.trim(),
-    status: f.status.value,
-    problem: f.problem.value.trim(),
-    approach: f.approach.value.trim(),
-    stack: f.stack.value.split(",").map(s => s.trim()).filter(Boolean)
+/* ---------- editor ---------- */
+if (EDITOR) {
+  const NEW = {
+    about: () => "",
+    facts: () => ["", ""],
+    grades: () => ["", ""],
+    links: () => ["", ""],
+    ideas: () => ({ title: "New project", pitch: "", status: "Brewing", problem: "", approach: "", stack: [] })
+  };
+  const P = p => esc(JSON.stringify(p));
+  const text = (label, key, area) => `<label>${label}</label>` + (area
+    ? `<textarea data-p="${P([key])}">${esc(ME[key])}</textarea>`
+    : `<input data-p="${P([key])}" value="${esc(ME[key])}">`);
+  const pairs = (key, ph) => ME[key].map((r, i) => `
+    <div class="row">
+      <input data-p="${P([key,i,0])}" value="${esc(r[0])}" placeholder="${ph[0]}" aria-label="${ph[0]}">
+      <input data-p="${P([key,i,1])}" value="${esc(r[1])}" placeholder="${ph[1]}" aria-label="${ph[1]}">
+      <button type="button" class="x" data-del="${P([key,i])}">Remove</button>
+    </div>`).join("") + `<button type="button" class="add" data-add="${key}">+ Add</button>`;
+
+  function renderEditor(){
+    $("edBody").innerHTML = `
+      <h3>Top of page</h3>
+      ${text("Full name", "name")}
+      ${text("First name (big greeting)", "firstName")}
+      ${text("Intro", "intro", true)}
+      ${text("Second intro line", "introMore", true)}
+      ${text("Currently…", "now")}
+
+      <h3>About</h3>
+      ${text("Heading", "aboutTitle")}
+      ${text("Subtitle", "role")}
+      <label>Paragraphs</label>
+      ${ME.about.map((p, i) => `<div class="row one"><textarea data-p="${P(["about",i])}" aria-label="Paragraph ${i+1}">${esc(p)}</textarea><button type="button" class="x" data-del="${P(["about",i])}">Remove</button></div>`).join("")}
+      <button type="button" class="add" data-add="about">+ Add paragraph</button>
+      <label>Facts</label>
+      ${pairs("facts", ["Label", "Value"])}
+
+      <h3>Academics</h3>
+      ${text("Heading", "gradesTitle")}
+      ${pairs("grades", ["Score", "What it's for"])}
+
+      <h3>Projects</h3>
+      ${text("Heading", "ideasTitle")}
+      ${text("Description", "ideasLede", true)}
+      ${ME.ideas.map((it, i) => `
+        <div class="card">
+          <div class="card-top"><button type="button" class="x" data-del="${P(["ideas",i])}">Remove project</button></div>
+          <label>Project name</label><input data-p="${P(["ideas",i,"title"])}" value="${esc(it.title)}">
+          <label>Status</label><select data-p="${P(["ideas",i,"status"])}">${STATUSES.map(s => `<option${s===it.status?" selected":""}>${s}</option>`).join("")}</select>
+          <label>One-line pitch</label><input data-p="${P(["ideas",i,"pitch"])}" value="${esc(it.pitch)}">
+          <label>The problem</label><textarea data-p="${P(["ideas",i,"problem"])}">${esc(it.problem)}</textarea>
+          <label>My plan</label><textarea data-p="${P(["ideas",i,"approach"])}">${esc(it.approach)}</textarea>
+          <label>Likely tools (comma separated)</label><input data-p="${P(["ideas",i,"stack"])}" data-csv value="${esc((it.stack||[]).join(", "))}">
+        </div>`).join("")}
+      <button type="button" class="add" data-add="ideas">+ Add project</button>
+
+      <h3>Contact</h3>
+      ${text("Heading", "contactTitle")}
+      ${text("Description", "contactLede", true)}
+      ${text("Email", "email")}
+      <label>Links</label>
+      ${pairs("links", ["Name", "https://…"])}`;
+  }
+  const saveDraft = () => { try { localStorage.setItem(DRAFT_KEY, JSON.stringify(ME)); } catch {} };
+  const update = () => { saveDraft(); renderPage(); };
+
+  $("edBody").addEventListener("input", e => {
+    const el = e.target; if (!el.dataset.p) return;
+    const path = JSON.parse(el.dataset.p), last = path.pop();
+    const obj = path.reduce((o, k) => o[k], ME);
+    obj[last] = el.hasAttribute("data-csv") ? el.value.split(",").map(s => s.trim()).filter(Boolean) : el.value;
+    update();
   });
-  save(); form.reset(); form.hidden = true; filter = "All"; render();
-});
-render();
+  $("edBody").addEventListener("click", e => {
+    const add = e.target.closest("[data-add]"), del = e.target.closest("[data-del]");
+    if (add) { ME[add.dataset.add].push(NEW[add.dataset.add]()); update(); renderEditor(); }
+    if (del) {
+      const [key, i] = JSON.parse(del.dataset.del);
+      if (key === "ideas" && !confirm(`Remove "${ME.ideas[i].title}"?`)) return;
+      ME[key].splice(i, 1); update(); renderEditor();
+    }
+  });
+
+  const open = on => { $("ed").hidden = !on; $("edOpen").hidden = on; document.body.classList.toggle("ed-open", on); };
+  $("edOpen").addEventListener("click", () => open(true));
+  $("edClose").addEventListener("click", () => open(false));
+  $("edDiscard").addEventListener("click", () => {
+    if (!confirm("Throw away your changes and go back to what's in the file?")) return;
+    try { localStorage.removeItem(DRAFT_KEY); } catch {}
+    ME = structuredClone(ORIGINAL); renderPage(); renderEditor();
+  });
+
+  const dataJSON = () => JSON.stringify(ME, null, 2).replace(/</g, "\\u003c");
+  const flash = (btn, msg) => { const t = btn.textContent; btn.textContent = msg; setTimeout(() => btn.textContent = t, 2500); };
+  async function copyData(btn){
+    try { await navigator.clipboard.writeText(dataJSON()); flash(btn, "Copied!"); }
+    catch { prompt("Copy this:", dataJSON()); }
+    $("edNote").textContent = "Copied. In index.html, replace everything between <script type=\"application/json\" id=\"me-data\"> and <\/script> with it.";
+  }
+  $("edCopy").addEventListener("click", e => copyData(e.target));
+  $("edDownload").addEventListener("click", async e => {
+    const btn = e.target, RE = /(<script type="application\/json" id="me-data">)[\s\S]*?(<\/script>)/;
+    let src = "";
+    try { src = await (await fetch(location.href.split("#")[0], { cache: "no-store" })).text(); } catch {}
+    if (!RE.test(src)) { copyData(btn); $("edNote").textContent = "Chrome can't build the file when the page is opened from your computer, so your data was copied instead. In index.html, replace everything between <script type=\"application/json\" id=\"me-data\"> and <\/script> with it. (On the live site, Download works.)"; return; }
+    const out = src.replace(RE, (m, a, b) => `${a}\n${dataJSON()}\n${b}`);
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([out], { type: "text/html" }));
+    a.download = "index.html"; a.click(); URL.revokeObjectURL(a.href);
+    flash(btn, "Downloaded!");
+    $("edNote").textContent = "Now go to your GitHub repository → Add file → Upload files, drop in this index.html and commit. Your site updates in 1–2 minutes.";
+  });
+
+  renderEditor();
+  open(true);
+}
 </script>
 </body>
 </html>
