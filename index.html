@@ -277,6 +277,17 @@ const DRAFT_KEY = "portfolio-draft";
 let ME = ORIGINAL;
 if (EDITOR) {
   try { const d = JSON.parse(localStorage.getItem(DRAFT_KEY)); if (d && typeof d === "object") ME = d; } catch {}
+  // Bring in projects saved by the older "Edit projects" version of this page
+  try {
+    const old = JSON.parse(localStorage.getItem("portfolio-ideas"));
+    if (Array.isArray(old) && old.length) {
+      if (ME === ORIGINAL) ME = structuredClone(ORIGINAL);
+      const have = new Set(ME.ideas.map(i => i.title));
+      ME.ideas.push(...old.filter(i => !have.has(i.title)));
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(ME));
+      localStorage.removeItem("portfolio-ideas");
+    }
+  } catch {}
 }
 // Adding #edit to an already-open page reloads it so the editor appears
 addEventListener("hashchange", () => { if ((location.hash === "#edit") !== EDITOR) location.reload(); });
